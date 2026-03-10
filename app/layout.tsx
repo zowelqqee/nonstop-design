@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Manrope, Prata } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ 
+const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  variable: '--font-inter',
+  variable: '--font-manrope',
   display: 'swap',
 });
 
-const playfair = Playfair_Display({ 
+const prata = Prata({
   subsets: ["latin", "cyrillic"],
-  variable: '--font-playfair',
+  weight: "400",
+  variable: '--font-prata',
   display: 'swap',
 });
 
@@ -48,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="ru" className={`${manrope.variable} ${prata.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

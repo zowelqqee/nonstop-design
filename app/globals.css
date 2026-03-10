@@ -76,8 +76,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', 'Times New Roman', serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-serif: var(--font-prata), 'Times New Roman', serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -121,7 +121,50 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "liga" 1, "kern" 1;
+    line-height: 1.6;
+    letter-spacing: 0.002em;
+  }
+  h1.font-serif,
+  h2.font-serif,
+  h3.font-serif {
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  h1.font-serif {
+    line-height: 1.04;
+    font-size: clamp(2.8rem, 8vw, 6.75rem);
+  }
+  section h2.font-serif {
+    line-height: 1.08;
+    font-size: clamp(2rem, 4.4vw, 3.65rem);
+  }
+  h3.font-serif {
+    line-height: 1.16;
+  }
+  p,
+  a,
+  button,
+  label,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-manrope), system-ui, sans-serif;
+  }
+  p.font-light,
+  a.font-light,
+  button.font-light,
+  label.font-light,
+  input.font-light,
+  textarea.font-light,
+  select.font-light,
+  span.font-light {
+    font-weight: 350;
   }
 }
