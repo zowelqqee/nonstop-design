@@ -1,8 +1,14 @@
 "use client"
 
 import Link from "next/link"
+import type { RegionFooterContent, RegionOption } from "@/lib/regions"
 
-export function Footer() {
+interface FooterProps {
+  content: RegionFooterContent
+  regions: RegionOption[]
+}
+
+export function Footer({ content, regions }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
@@ -15,7 +21,7 @@ export function Footer() {
               <span className="font-serif text-2xl tracking-tight text-background">Non-Stop</span>
             </Link>
             <p className="mt-4 text-sm font-light text-background/60 leading-relaxed">
-              Студия премиальной ландшафтной архитектуры
+              {content.studioDescription}
             </p>
           </div>
 
@@ -46,15 +52,11 @@ export function Footer() {
               Регионы
             </h4>
             <nav className="space-y-3">
-              <span className="block text-sm font-light text-background/80">
-                Санкт-Петербург
-              </span>
-              <span className="block text-sm font-light text-background/80">
-                Москва
-              </span>
-              <span className="block text-sm font-light text-background/80">
-                Ереван
-              </span>
+              {regions.map((region) => (
+                <span key={region.id} className="block text-sm font-light text-background/80">
+                  {region.label}
+                </span>
+              ))}
             </nav>
           </div>
 
@@ -64,11 +66,20 @@ export function Footer() {
               Связь
             </h4>
             <div className="space-y-3">
-              <a href="mailto:studio@non-stop.design" className="block text-sm font-light text-background/80 hover:text-background transition-colors">
-                studio@non-stop.design
+              <span className="block text-xs font-light tracking-wider text-background/50 uppercase">
+                {content.regionLabel}
+              </span>
+              <span className="block text-sm font-light text-background/80">
+                {content.regionOfficeLabel}
+              </span>
+              <span className="block text-sm font-light text-background/80">
+                {content.regionOfficeAddress}
+              </span>
+              <a href={`mailto:${content.email}`} className="block text-sm font-light text-background/80 hover:text-background transition-colors">
+                {content.email}
               </a>
-              <a href="tel:+78121234567" className="block text-sm font-light text-background/80 hover:text-background transition-colors">
-                +7 (812) 123-45-67
+              <a href={`tel:${content.phoneHref}`} className="block text-sm font-light text-background/80 hover:text-background transition-colors">
+                {content.phoneDisplay}
               </a>
             </div>
           </div>

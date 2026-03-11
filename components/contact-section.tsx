@@ -1,38 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import type { Region, RegionContactContent, RegionOption } from "@/lib/regions"
 
 interface ContactSectionProps {
-  currentRegion: string
+  currentRegion: Region
+  content: RegionContactContent
+  regions: RegionOption[]
 }
 
-const regionNames: Record<string, string> = {
-  spb: "Санкт-Петербург",
-  msk: "Москва",
-  yerevan: "Ереван",
-}
-
-const projectTypes = [
-  "Новый ландшафт",
-  "Реконструкция сада",
-  "Благоустройство террасы",
-  "Уход за садом",
-  "Другое",
-]
-
-export function ContactSection({ currentRegion }: ContactSectionProps) {
+export function ContactSection({ currentRegion, content, regions }: ContactSectionProps) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    city: regionNames[currentRegion] || "Санкт-Петербург",
+    city: content.city,
     projectType: "",
     description: "",
   })
 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      city: content.city,
+      projectType: content.projectTypes.includes(prev.projectType) ? prev.projectType : "",
+    }))
+  }, [content.city, content.projectTypes])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
-    console.log("Form submitted:", formData)
+    console.log("Form submitted:", { ...formData, region: currentRegion })
   }
 
   return (
@@ -42,14 +39,13 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
           {/* Content */}
           <div>
             <span className="text-xs font-light tracking-[0.3em] uppercase text-muted-foreground">
-              Контакты
+              {content.sectionLabel}
             </span>
             <h2 className="mt-6 font-serif text-3xl sm:text-4xl md:text-5xl text-foreground tracking-tight leading-[1.1] text-balance">
-              Начнём разговор о вашем проекте
+              {content.title}
             </h2>
             <p className="mt-8 text-base font-light text-muted-foreground leading-relaxed">
-              Заполните форму, и мы свяжемся с вами в течение рабочего дня, 
-              чтобы обсудить ваш проект и ответить на вопросы.
+              {content.description}
             </p>
 
             <div className="mt-12 space-y-6">
@@ -58,7 +54,7 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
                   Email
                 </span>
                 <p className="mt-1 text-lg font-light text-foreground">
-                  studio@non-stop.design
+                  {content.email}
                 </p>
               </div>
               <div>
@@ -66,7 +62,15 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
                   Телефон
                 </span>
                 <p className="mt-1 text-lg font-light text-foreground">
-                  +7 (812) 123-45-67
+                  {content.phoneDisplay}
+                </p>
+              </div>
+              <div>
+                <span className="text-xs font-light tracking-wider text-muted-foreground uppercase">
+                  {content.officeLabel}
+                </span>
+                <p className="mt-1 text-lg font-light text-foreground">
+                  {content.officeAddress}
                 </p>
               </div>
             </div>
@@ -118,9 +122,11 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-4 py-3 bg-background border border-border text-foreground text-sm font-light focus:outline-none focus:border-primary transition-colors appearance-none cursor-pointer"
                 >
-                  <option value="Санкт-Петербург">Санкт-Петербург</option>
-                  <option value="Москва">Москва</option>
-                  <option value="Ереван">Ереван</option>
+                  {regions.map((region) => (
+                    <option key={region.id} value={region.label}>
+                      {region.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -137,7 +143,7 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
                   required
                 >
                   <option value="" disabled>Выберите тип проекта</option>
-                  {projectTypes.map((type) => (
+                  {content.projectTypes.map((type) => (
                     <option key={type} value={type}>{type}</option>
                   ))}
                 </select>
@@ -163,11 +169,11 @@ export function ContactSection({ currentRegion }: ContactSectionProps) {
                 type="submit"
                 className="w-full px-8 py-4 bg-primary text-primary-foreground text-sm font-light tracking-widest uppercase hover:bg-primary/90 transition-colors"
               >
-                Запросить консультацию
+                {content.submitLabel}
               </button>
 
               <p className="text-xs font-light text-muted-foreground text-center">
-                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                {content.privacyNote}
               </p>
             </form>
           </div>

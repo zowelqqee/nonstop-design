@@ -2,32 +2,13 @@
 
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
+import type { RegionProjectsContent } from "@/lib/regions"
 
-const projects = [
-  {
-    id: 1,
-    title: "Резиденция на Крестовском",
-    city: "Санкт-Петербург",
-    description: "Атмосферный сад с водным садом и коллекцией декоративных трав в сдержанной северной эстетике.",
-    image: "/images/project-1.jpg",
-  },
-  {
-    id: 2,
-    title: "Поместье в Жуковке",
-    city: "Москва",
-    description: "Представительный ландшафт с геометрическими партерами, скульптурной топиарией и панорамным бассейном.",
-    image: "/images/project-2.jpg",
-  },
-  {
-    id: 3,
-    title: "Вилла в Аване",
-    city: "Ереван",
-    description: "Средиземноморский сад с террасами из тёплого камня, оливами и системой сухого ручья.",
-    image: "/images/project-3.jpg",
-  },
-]
+interface ProjectsSectionProps {
+  content: RegionProjectsContent
+}
 
-export function ProjectsSection() {
+export function ProjectsSection({ content }: ProjectsSectionProps) {
   return (
     <section id="projects" className="py-24 sm:py-32 lg:py-40 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -35,21 +16,21 @@ export function ProjectsSection() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
             <span className="text-xs font-light tracking-[0.3em] uppercase text-muted-foreground">
-              Портфолио
+              {content.sectionLabel}
             </span>
             <h2 className="mt-6 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground tracking-tight">
-              Избранные проекты
+              {content.title}
             </h2>
           </div>
           <button className="self-start sm:self-auto inline-flex items-center gap-2 text-sm font-light tracking-wide text-primary hover:text-primary/80 transition-colors group">
-            Все проекты
+            {content.ctaLabel}
             <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
 
         {/* Projects Grid */}
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {content.items.map((project, index) => (
             <article
               key={project.id}
               className={`group cursor-pointer ${index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}

@@ -4,21 +4,21 @@ import { useState } from "react"
 import Link from "next/link"
 import { ChevronDown, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-const regions = [
-  { id: "spb", name: "Санкт-Петербург", short: "СПб" },
-  { id: "msk", name: "Москва", short: "МСК" },
-  { id: "yerevan", name: "Ереван", short: "ЕРВ" },
-]
+import type { Region, RegionOption } from "@/lib/regions"
 
 interface HeaderProps {
-  currentRegion: string
-  onRegionChange: (region: string) => void
+  currentRegion: Region
+  onRegionChange: (region: Region) => void
+  regions: RegionOption[]
 }
 
-export function Header({ currentRegion, onRegionChange }: HeaderProps) {
+export function Header({ currentRegion, onRegionChange, regions }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isRegionOpen, setIsRegionOpen] = useState(false)
+
+  if (regions.length === 0) {
+    return null
+  }
 
   const currentRegionData = regions.find((r) => r.id === currentRegion) || regions[0]
 
@@ -55,7 +55,7 @@ export function Header({ currentRegion, onRegionChange }: HeaderProps) {
                 onClick={() => setIsRegionOpen(!isRegionOpen)}
                 className="flex items-center gap-2 text-sm font-light tracking-wide text-muted-foreground hover:text-foreground transition-colors"
               >
-                <span className="hidden sm:inline">{currentRegionData.name}</span>
+                <span className="hidden sm:inline">{currentRegionData.label}</span>
                 <span className="sm:hidden">{currentRegionData.short}</span>
                 <ChevronDown className={cn("h-4 w-4 transition-transform", isRegionOpen && "rotate-180")} />
               </button>
@@ -76,7 +76,7 @@ export function Header({ currentRegion, onRegionChange }: HeaderProps) {
                           region.id === currentRegion && "bg-muted text-primary"
                         )}
                       >
-                        {region.name}
+                        {region.label}
                       </button>
                     ))}
                   </div>

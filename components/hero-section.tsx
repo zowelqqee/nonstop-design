@@ -3,15 +3,20 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
+import type { RegionHeroContent } from "@/lib/regions"
 
-export function HeroSection() {
+interface HeroSectionProps {
+  content: RegionHeroContent
+}
+
+export function HeroSection({ content }: HeroSectionProps) {
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-landscape.jpg"
-          alt="Премиальный ландшафтный дизайн"
+          alt={content.imageAlt}
           fill
           className="object-cover"
           priority
@@ -24,11 +29,11 @@ export function HeroSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center">
         <div className="mx-auto max-w-4xl">
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-background tracking-tight leading-[1.1] text-balance">
-            Ландшафты, созданные вручную
+            {content.title}
           </h1>
           
           <p className="mt-8 text-lg sm:text-xl md:text-2xl font-light text-background/90 max-w-2xl mx-auto leading-relaxed text-pretty">
-            Индивидуальный дизайн и реализация премиальных садов для частных резиденций
+            {content.subtitle}
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">

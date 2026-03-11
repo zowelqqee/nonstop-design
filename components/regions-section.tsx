@@ -1,37 +1,27 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import type { Region } from "@/lib/regions"
 
 interface RegionsSectionProps {
-  currentRegion: string
-  onRegionChange: (region: string) => void
+  currentRegion: Region
+  onRegionChange: (region: Region) => void
+  regions: Array<{
+    id: Region
+    label: string
+    tagline: string
+    description: string
+    features: string[]
+  }>
 }
 
-const regions = [
-  {
-    id: "spb",
-    name: "Санкт-Петербург",
-    tagline: "Сдержанная северная эстетика",
-    description: "Атмосферные сады, учитывающие особенности петербургского климата. Работа с сезонностью, туманами, белыми ночами. Растения, которые раскрываются в северном свете.",
-    features: ["Сезонная драматургия", "Теневые сады", "Водные зеркала"],
-  },
-  {
-    id: "msk",
-    name: "Москва",
-    tagline: "Представительность и масштаб",
-    description: "Парадные ландшафты для просторных резиденций. Геометрическая ясность, скульптурные формы, представительные въездные зоны и панорамные виды.",
-    features: ["Партерные сады", "Топиарное искусство", "Бассейны и террасы"],
-  },
-  {
-    id: "yerevan",
-    name: "Ереван",
-    tagline: "Тепло камня и солнца",
-    description: "Средиземноморская эстетика, адаптированная к армянскому пейзажу. Террасирование, тёплые текстуры камня, засухоустойчивые растения и прохладные зоны отдыха.",
-    features: ["Каменные террасы", "Сухие сады", "Оливы и лаванда"],
-  },
-]
+export function RegionsSection({ currentRegion, onRegionChange, regions }: RegionsSectionProps) {
+  if (regions.length === 0) {
+    return null
+  }
 
-export function RegionsSection({ currentRegion, onRegionChange }: RegionsSectionProps) {
+  const activeRegion = regions.find((region) => region.id === currentRegion) ?? regions[0]
+
   return (
     <section className="py-24 sm:py-32 lg:py-40 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -44,7 +34,7 @@ export function RegionsSection({ currentRegion, onRegionChange }: RegionsSection
             Три города — три характера
           </h2>
           <p className="mt-8 text-lg font-light text-muted-foreground leading-relaxed">
-            Мы работаем в трёх регионах, и каждый требует уникального подхода к ландшафту.
+            {activeRegion.description}
           </p>
         </div>
 
@@ -60,7 +50,7 @@ export function RegionsSection({ currentRegion, onRegionChange }: RegionsSection
               )}
             >
               <h3 className="font-serif text-2xl sm:text-3xl text-foreground">
-                {region.name}
+                {region.label}
               </h3>
               <p className="mt-2 text-sm font-light tracking-wide text-primary">
                 {region.tagline}
@@ -71,9 +61,9 @@ export function RegionsSection({ currentRegion, onRegionChange }: RegionsSection
               
               {/* Features */}
               <div className="mt-8 flex flex-wrap gap-2">
-                {region.features.map((feature, index) => (
+                {region.features.map((feature) => (
                   <span
-                    key={index}
+                    key={feature}
                     className="px-3 py-1.5 text-xs font-light tracking-wide text-foreground/70 border border-border"
                   >
                     {feature}
