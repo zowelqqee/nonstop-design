@@ -75,15 +75,15 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
     label: "Санкт-Петербург",
     short: "СПб",
     hero: {
-      title: "Сады северного света",
+      title: "Частные ландшафты Санкт-Петербурга",
       subtitle:
-        "Сдержанные ландшафты для частных резиденций Петербурга с акцентом на тень, воду и стабильную сезонную структуру.",
+        "Создаём сады для частных резиденций с вниманием к климату, воде, сезонности и архитектуре участка.",
       imageAlt: "Премиальный ландшафт в Санкт-Петербурге",
     },
     projects: {
       sectionLabel: "Портфолио Санкт-Петербурга",
       title: "Избранные проекты в северной эстетике",
-      ctaLabel: "Все проекты СПб",
+      ctaLabel: "Смотреть все проекты в Санкт-Петербурге",
       items: [
         {
           id: "spb-1",
@@ -134,7 +134,7 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
     },
     footer: {
       studioDescription:
-        "Петербургское направление студии: атмосферные сады с северным характером и выверенной сезонной композицией.",
+        "Петербургское направление студии: атмосферные ландшафты с северным характером и выверенной сезонной композицией.",
       regionLabel: "Текущий регион",
       regionOfficeLabel: "Офис Санкт-Петербург",
       regionOfficeAddress: "Каменноостровский пр., 38",
@@ -145,23 +145,23 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
     card: {
       tagline: "Сдержанный север",
       description:
-        "Сады для прохладного климата: тени, вода и устойчивые посадки без лишних деталей.",
-      features: ["Сезонные посадки", "Теневые сады", "Водные зеркала"],
+        "Ландшафты для прохладного климата: тени, вода и устойчивые посадки без лишних деталей.",
+      features: ["Сезонные посадки", "Теневые композиции", "Водные зеркала"],
     },
   },
   msk: {
     label: "Москва",
     short: "МСК",
     hero: {
-      title: "Представительные сады Москвы",
+      title: "Резиденциальные ландшафты Москвы",
       subtitle:
-        "Проектируем крупные резиденциальные участки с чистой структурой, дорогими материалами и аккуратной деталировкой.",
+        "Проектируем крупные частные участки с чистой структурой, дорогими материалами и высоким уровнем реализации.",
       imageAlt: "Премиальный ландшафт в Москве",
     },
     projects: {
       sectionLabel: "Портфолио Москвы",
       title: "Пространства статуса и масштаба",
-      ctaLabel: "Все проекты Москва",
+      ctaLabel: "Смотреть все проекты в Москве",
       items: [
         {
           id: "msk-1",
@@ -231,15 +231,15 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
     label: "Ереван",
     short: "ЕРВ",
     hero: {
-      title: "Террасные сады Еревана",
+      title: "Частные ландшафты Еревана",
       subtitle:
-        "Работаем с камнем, тенью и рельефом, создавая приватные сады для жаркого климата и ежедневного использования.",
+        "Работаем с рельефом, камнем, тенью и устойчивыми посадками для частных садов в тёплом климате.",
       imageAlt: "Премиальный ландшафт в Ереване",
     },
     projects: {
       sectionLabel: "Портфолио Еревана",
       title: "Камень, солнце и живая текстура",
-      ctaLabel: "Все проекты Ереван",
+      ctaLabel: "Смотреть все проекты в Ереване",
       items: [
         {
           id: "yerevan-1",
@@ -312,3 +312,13 @@ export const REGION_OPTIONS: RegionOption[] = REGION_IDS.map((id) => ({
   label: REGION_CONTENT[id].label,
   short: REGION_CONTENT[id].short,
 }))
+
+export const REGION_PROJECTS_BASE_PATH = "/projects" as const
+
+export function isRegion(value: string): value is Region {
+  return REGION_IDS.includes(value as Region)
+}
+
+export function getRegionProjectsPath(region: Region): `${typeof REGION_PROJECTS_BASE_PATH}/${Region}` {
+  return `${REGION_PROJECTS_BASE_PATH}/${region}`
+}
