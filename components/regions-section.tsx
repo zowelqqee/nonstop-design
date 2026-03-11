@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Region } from "@/lib/regions"
 
@@ -76,6 +78,16 @@ export function RegionsSection({ currentRegion, onRegionChange, regions }: Regio
                 "mt-8 h-0.5 bg-primary transition-all duration-300",
                 currentRegion === region.id ? "w-12" : "w-0"
               )} />
+
+              {/* CTA Link */}
+              <Link
+                href={`/projects/${region.id}`}
+                onClick={(e) => e.stopPropagation()}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-light tracking-wide text-primary hover:text-primary/80 transition-colors group"
+              >
+                Смотреть все проекты в {region.label.split("-")[0]}
+                <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
             </button>
           ))}
         </div>
