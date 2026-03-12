@@ -1,14 +1,16 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import type { RegionProjectsContent } from "@/lib/regions"
 
 interface ProjectsSectionProps {
   content: RegionProjectsContent
+  projectsHref: string
 }
 
-export function ProjectsSection({ content }: ProjectsSectionProps) {
+export function ProjectsSection({ content, projectsHref }: ProjectsSectionProps) {
   return (
     <section id="projects" className="py-24 sm:py-32 lg:py-40 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -22,10 +24,13 @@ export function ProjectsSection({ content }: ProjectsSectionProps) {
               {content.title}
             </h2>
           </div>
-          <button className="self-start sm:self-auto inline-flex items-center gap-2 text-sm font-light tracking-wide text-primary hover:text-primary/80 transition-colors group">
+          <Link
+            href={projectsHref}
+            className="self-start sm:self-auto inline-flex items-center gap-2 text-sm font-light tracking-wide text-primary hover:text-primary/80 transition-colors group"
+          >
             {content.ctaLabel}
             <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
+          </Link>
         </div>
 
         {/* Projects Grid */}

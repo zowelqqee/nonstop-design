@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Region } from "@/lib/regions"
 
@@ -12,6 +14,8 @@ interface RegionsSectionProps {
     tagline: string
     description: string
     features: string[]
+    ctaLabel: string
+    projectsHref: string
   }>
 }
 
@@ -41,9 +45,17 @@ export function RegionsSection({ currentRegion, onRegionChange, regions }: Regio
         {/* Regions */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
           {regions.map((region) => (
-            <button
+            <article
               key={region.id}
               onClick={() => onRegionChange(region.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault()
+                  onRegionChange(region.id)
+                }
+              }}
               className={cn(
                 "bg-background p-8 sm:p-10 lg:p-12 text-left transition-all duration-300 hover:bg-muted/50",
                 currentRegion === region.id && "bg-muted/80"
@@ -71,12 +83,21 @@ export function RegionsSection({ currentRegion, onRegionChange, regions }: Regio
                 ))}
               </div>
 
+              <Link
+                href={region.projectsHref}
+                onClick={(event) => event.stopPropagation()}
+                className="mt-8 inline-flex items-center gap-2 text-sm font-light tracking-wide text-primary hover:text-primary/80 transition-colors group"
+              >
+                {region.ctaLabel}
+                <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+
               {/* Active Indicator */}
               <div className={cn(
                 "mt-8 h-0.5 bg-primary transition-all duration-300",
                 currentRegion === region.id ? "w-12" : "w-0"
               )} />
-            </button>
+            </article>
           ))}
         </div>
       </div>

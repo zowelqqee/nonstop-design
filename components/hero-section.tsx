@@ -1,5 +1,6 @@
 "use client"
 
+import { useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
@@ -10,15 +11,35 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ content }: HeroSectionProps) {
+  const sectionRef = useRef<HTMLElement | null>(null)
+
+  const handleScrollDown = () => {
+    const nextSection = sectionRef.current?.nextElementSibling
+
+    if (!(nextSection instanceof HTMLElement)) {
+      return
+    }
+
+    const headerOffset = 80
+    const top =
+      nextSection.getBoundingClientRect().top + window.scrollY - headerOffset
+
+    window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" })
+  }
+
   return (
-    <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative flex h-[calc(100vh-5rem)] h-[calc(100svh-5rem)] min-h-[760px] items-center justify-center overflow-hidden"
+    >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-landscape.jpg"
+          src={content.image}
           alt={content.imageAlt}
           fill
           className="object-cover"
+          style={{ objectPosition: "center 60%" }}
           priority
           quality={90}
         />
@@ -26,7 +47,9 @@ export function HeroSection({ content }: HeroSectionProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center">
+      <div
+        className={`relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center ${content.contentOffsetClassName ?? ""}`}
+      >
         <div className="mx-auto max-w-4xl">
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-background tracking-tight leading-[1.1] text-balance">
             {content.title}
@@ -54,9 +77,14 @@ export function HeroSection({ content }: HeroSectionProps) {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <ArrowDown className="h-6 w-6 text-background/70" />
-      </div>
+      <button
+        type="button"
+        onClick={handleScrollDown}
+        aria-label="Прокрутить к следующему разделу"
+        className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 animate-bounce text-background/70 transition-colors hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background/70 sm:bottom-4"
+      >
+        <ArrowDown className="h-6 w-6" />
+      </button>
     </section>
   )
 }

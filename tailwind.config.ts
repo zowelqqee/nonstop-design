@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        serif: ["var(--font-prata)", "Times New Roman", "serif"],
+        serif: ["var(--font-manrope)", "system-ui", "sans-serif"],
       },
     },
   },

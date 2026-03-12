@@ -12,6 +12,8 @@ export interface RegionHeroContent {
   title: string
   subtitle: string
   imageAlt: string
+  image: string
+  contentOffsetClassName?: string
 }
 
 export interface RegionProject {
@@ -79,6 +81,7 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
       subtitle:
         "Создаём сады для частных резиденций с вниманием к климату, воде, сезонности и архитектуре участка.",
       imageAlt: "Премиальный ландшафт в Санкт-Петербурге",
+      image: "/images/hero-landscape_spb.png",
     },
     projects: {
       sectionLabel: "Портфолио Санкт-Петербурга",
@@ -157,6 +160,8 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
       subtitle:
         "Проектируем крупные частные участки с чистой структурой, дорогими материалами и высоким уровнем реализации.",
       imageAlt: "Премиальный ландшафт в Москве",
+      image: "/images/hero-landscape_moscow.png",
+      contentOffsetClassName: "translate-y-6 sm:translate-y-8",
     },
     projects: {
       sectionLabel: "Портфолио Москвы",
@@ -235,6 +240,7 @@ export const REGION_CONTENT: Record<Region, RegionContent> = {
       subtitle:
         "Работаем с рельефом, камнем, тенью и устойчивыми посадками для частных садов в тёплом климате.",
       imageAlt: "Премиальный ландшафт в Ереване",
+      image: "/images/hero-landscape_yerevan.png",
     },
     projects: {
       sectionLabel: "Портфолио Еревана",

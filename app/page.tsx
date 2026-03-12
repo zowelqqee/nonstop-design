@@ -13,14 +13,14 @@ import { CareSection } from "@/components/care-section"
 import { AboutSection } from "@/components/about-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
-import { REGION_CONTENT, REGION_OPTIONS, type Region } from "@/lib/regions"
+import { REGION_CONTENT, REGION_OPTIONS, getRegionProjectsPath, type Region } from "@/lib/regions"
 
 export default function HomePage() {
   const [currentRegion, setCurrentRegion] = useState<Region>("spb")
   const regionContent = REGION_CONTENT[currentRegion]
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pt-20">
       <Header
         currentRegion={currentRegion}
         onRegionChange={setCurrentRegion}
@@ -28,7 +28,10 @@ export default function HomePage() {
       />
       <HeroSection content={regionContent.hero} />
       <PhilosophySection />
-      <ProjectsSection content={regionContent.projects} />
+      <ProjectsSection
+        content={regionContent.projects}
+        projectsHref={getRegionProjectsPath(currentRegion)}
+      />
       <ProcessSection />
       <MaterialsSection />
       <RegionsSection
@@ -40,6 +43,8 @@ export default function HomePage() {
           tagline: REGION_CONTENT[option.id].card.tagline,
           description: REGION_CONTENT[option.id].card.description,
           features: REGION_CONTENT[option.id].card.features,
+          ctaLabel: REGION_CONTENT[option.id].projects.ctaLabel,
+          projectsHref: getRegionProjectsPath(option.id),
         }))}
       />
       <AudienceSection />

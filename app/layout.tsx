@@ -11,8 +11,8 @@ const manrope = Manrope({
 
 const prata = Prata({
   subsets: ["latin", "cyrillic"],
-  weight: "400",
   variable: '--font-prata',
+  weight: "400",
   display: 'swap',
 });
 
