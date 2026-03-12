@@ -8,12 +8,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        serif: ["var(--font-manrope)", "system-ui", "sans-serif"],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
